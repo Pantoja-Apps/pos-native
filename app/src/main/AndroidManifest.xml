@@ -14,7 +14,9 @@
         android:label="Facilito POS"
         android:roundIcon="@android:drawable/sym_def_app_icon"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Material3.DayNight.NoActionBar">
+        
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -23,6 +25,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".PosActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
