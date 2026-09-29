@@ -1,209 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#F8FAFC">
+    android:layout_height="match_parent">
 
-    <!-- CABECERA PRINCIPAL -->
-    <LinearLayout
-        android:id="@+id/headerBar"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#0F1D38"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="16dp">
-
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/ic_launcher"
-            android:layout_marginEnd="10dp" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="FACILITO POS"
-                android:textColor="#FFFFFF"
-                android:textSize="15sp"
-                android:fontFamily="sans-serif-black" />
-
-            <TextView
-                android:id="@+id/tvTerminalInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Caja 01 • MiniMarket JJJP"
-                android:textColor="#94A3B8"
-                android:textSize="10sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="8dp"
-            app:cardBackgroundColor="#064E3B"
-            app:strokeWidth="0dp">
-
-            <TextView
-                android:id="@+id/tvTasaBcv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="BCV: 857.88 Bs"
-                android:textColor="#34D399"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp" />
-        </com.google.android.material.card.MaterialCardView>
-    </LinearLayout>
-
-    <!-- BARRA DE BÚSQUEDA -->
-    <LinearLayout
-        android:id="@+id/searchSection"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/headerBar"
-        android:background="#FFFFFF"
-        android:padding="12dp"
-        android:elevation="2dp">
-
-        <EditText
-            android:id="@+id/etBuscar"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:background="@drawable/bg_input"
-            android:hint="🔍 Buscar producto o escanear código..."
-            android:textSize="13sp"
-            android:textColor="#0F172A"
-            android:paddingHorizontal="14dp"
-            android:inputType="text" />
-    </LinearLayout>
-
-    <!-- SELECTOR DE CATEGORÍAS -->
-    <HorizontalScrollView
-        android:id="@+id/categoryScroll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/searchSection"
-        android:scrollbars="none"
-        android:background="#FFFFFF"
-        android:paddingBottom="10dp"
-        android:paddingHorizontal="12dp">
-
-        <LinearLayout
-            android:id="@+id/layoutCategories"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/catTodos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Todos"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                android:background="@drawable/bg_tab_active"
-                android:paddingHorizontal="14dp"
-                android:paddingVertical="6dp"
-                android:layout_marginEnd="6dp" />
-
-            <TextView
-                android:id="@+id/catViveres"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Víveres"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:textColor="#475569"
-                android:background="@drawable/bg_tabs"
-                android:paddingHorizontal="14dp"
-                android:paddingVertical="6dp"
-                android:layout_marginEnd="6dp" />
-
-            <TextView
-                android:id="@+id/catCharcuteria"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Charcutería"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:textColor="#475569"
-                android:background="@drawable/bg_tabs"
-                android:paddingHorizontal="14dp"
-                android:paddingVertical="6dp"
-                android:layout_marginEnd="6dp" />
-
-            <TextView
-                android:id="@+id/catVerduras"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Verduras y Frutas"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:textColor="#475569"
-                android:background="@drawable/bg_tabs"
-                android:paddingHorizontal="14dp"
-                android:paddingVertical="6dp"
-                android:layout_marginEnd="6dp" />
-
-            <TextView
-                android:id="@+id/catHigiene"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Higiene"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:textColor="#475569"
-                android:background="@drawable/bg_tabs"
-                android:paddingHorizontal="14dp"
-                android:paddingVertical="6dp" />
-        </LinearLayout>
-    </HorizontalScrollView>
-
-    <!-- LISTADO DE PRODUCTOS -->
-    <ScrollView
+    <!-- CONTENIDO PRINCIPAL DEL POS -->
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/categoryScroll"
-        android:layout_above="@+id/cartBottomBar"
-        android:padding="12dp">
+        android:background="#F8FAFC">
 
+        <!-- CABECERA PRINCIPAL CON BOTON HAMBURGUESA -->
         <LinearLayout
-            android:id="@+id/containerProductos"
+            android:id="@+id/headerBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
-
-    <!-- BARRA INFERIOR DEL CARRITO Y COBRO -->
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cartBottomBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:cardCornerRadius="0dp"
-        app:cardElevation="16dp"
-        app:cardBackgroundColor="#FFFFFF"
-        app:strokeWidth="1dp"
-        app:strokeColor="#E2E8F0">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="62dp"
+            android:background="#0F1D38"
             android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="12dp"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:paddingHorizontal="14dp">
+
+            <!-- Boton Menu Hamburguesa -->
+            <TextView
+                android:id="@+id/btnAbrirMenu"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="☰"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:background="?attr/selectableItemBackgroundBorderless" />
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/app_logo"
+                android:layout_marginHorizontal="8dp" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -212,45 +45,381 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvItemsCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0 productos en orden"
-                    android:textColor="#64748B"
-                    android:textSize="11sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvTotalUsd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Total: $0.00"
-                    android:textColor="#0F172A"
-                    android:textSize="20sp"
+                    android:text="FACILITO POS"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
                     android:fontFamily="sans-serif-black" />
 
                 <TextView
-                    android:id="@+id/tvTotalBs"
+                    android:id="@+id/tvTerminalInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ref: 0.00 Bs"
-                    android:textColor="#00A859"
-                    android:textSize="13sp"
+                    android:text="Caja 01 • MiniMarket JJJP"
+                    android:textColor="#94A3B8"
+                    android:textSize="10sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnCobrar"
+            <!-- Tasa BCV -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:text="→ Cobrar Orden"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                app:backgroundTint="#00A859"
-                app:cornerRadius="14dp"
-                android:paddingHorizontal="18dp" />
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="#064E3B"
+                app:strokeWidth="0dp">
 
-</RelativeLayout>
+                <TextView
+                    android:id="@+id/tvTasaBcv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="BCV: 857.88 Bs"
+                    android:textColor="#34D399"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="4dp" />
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <!-- BARRA DE BÚSQUEDA Y LECTOR DE CÓDIGOS -->
+        <LinearLayout
+            android:id="@+id/searchSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/headerBar"
+            android:background="#FFFFFF"
+            android:padding="12dp"
+            android:elevation="2dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/etBuscar"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_input"
+                android:hint="🔍 Buscar producto o código..."
+                android:textSize="13sp"
+                android:textColor="#0F172A"
+                android:paddingHorizontal="14dp"
+                android:inputType="text" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEscanear"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="8dp"
+                android:text="📷"
+                android:textSize="16sp"
+                app:cornerRadius="12dp"
+                app:backgroundTint="#0F1D38"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:padding="0dp" />
+        </LinearLayout>
+
+        <!-- SELECTOR DE CATEGORÍAS -->
+        <HorizontalScrollView
+            android:id="@+id/categoryScroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/searchSection"
+            android:scrollbars="none"
+            android:background="#FFFFFF"
+            android:paddingBottom="10dp"
+            android:paddingHorizontal="12dp">
+
+            <LinearLayout
+                android:id="@+id/layoutCategories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/catTodos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Todos"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/bg_tab_active"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="6dp"
+                    android:layout_marginEnd="6dp" />
+
+                <TextView
+                    android:id="@+id/catViveres"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Víveres"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#475569"
+                    android:background="@drawable/bg_tabs"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="6dp"
+                    android:layout_marginEnd="6dp" />
+
+                <TextView
+                    android:id="@+id/catCharcuteria"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Charcutería"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#475569"
+                    android:background="@drawable/bg_tabs"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="6dp"
+                    android:layout_marginEnd="6dp" />
+
+                <TextView
+                    android:id="@+id/catVerduras"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Verduras y Frutas"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#475569"
+                    android:background="@drawable/bg_tabs"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="6dp"
+                    android:layout_marginEnd="6dp" />
+
+                <TextView
+                    android:id="@+id/catHigiene"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Higiene"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#475569"
+                    android:background="@drawable/bg_tabs"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="6dp" />
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <!-- LISTADO DE PRODUCTOS -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/categoryScroll"
+            android:layout_above="@+id/cartBottomBar"
+            android:padding="12dp">
+
+            <LinearLayout
+                android:id="@+id/containerProductos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </ScrollView>
+
+        <!-- BARRA INFERIOR DEL CARRITO Y COBRO -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cartBottomBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="16dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:strokeWidth="1dp"
+            app:strokeColor="#E2E8F0">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="12dp"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvItemsCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0 productos en orden"
+                        android:textColor="#64748B"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvTotalUsd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total: $0.00"
+                        android:textColor="#0F172A"
+                        android:textSize="20sp"
+                        android:fontFamily="sans-serif-black" />
+
+                    <TextView
+                        android:id="@+id/tvTotalBs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ref: 0.00 Bs"
+                        android:textColor="#00A859"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCobrar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="→ Cobrar Orden"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    app:backgroundTint="#00A859"
+                    app:cornerRadius="14dp"
+                    android:paddingHorizontal="18dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </RelativeLayout>
+
+    <!-- MENÚ LATERAL DESPLEGABLE (DRAWER NATIVO) -->
+    <LinearLayout
+        android:id="@+id/navigationMenu"
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="#0F1D38"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <ImageView
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/app_logo"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FACILITO POS"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif-black" />
+
+        <TextView
+            android:id="@+id/tvMenuUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Angel Pantoja • Dueño"
+            android:textColor="#94A3B8"
+            android:textSize="12sp"
+            android:layout_marginBottom="24dp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/navInventario"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:gravity="center_vertical"
+                    android:text="📦 Inventario / Productos"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:background="?attr/selectableItemBackground" />
+
+                <TextView
+                    android:id="@+id/navHistorial"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:gravity="center_vertical"
+                    android:text="🧾 Historial de Ventas"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:background="?attr/selectableItemBackground" />
+
+                <TextView
+                    android:id="@+id/navCierreCaja"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:gravity="center_vertical"
+                    android:text="🔒 Cierre de Turno / Caja"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:background="?attr/selectableItemBackground" />
+
+                <TextView
+                    android:id="@+id/navMetricas"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:gravity="center_vertical"
+                    android:text="📊 Métricas y Reportes"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:background="?attr/selectableItemBackground" />
+
+                <TextView
+                    android:id="@+id/navProveedores"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:gravity="center_vertical"
+                    android:text="🚚 Proveedores"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:background="?attr/selectableItemBackground" />
+
+                <TextView
+                    android:id="@+id/navTerminales"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:gravity="center_vertical"
+                    android:text="📱 Terminales / Cajas"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:background="?attr/selectableItemBackground" />
+
+                <TextView
+                    android:id="@+id/navConfig"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:gravity="center_vertical"
+                    android:text="⚙️ Configuración"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:background="?attr/selectableItemBackground" />
+            </LinearLayout>
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/navSalir"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:gravity="center_vertical"
+            android:text="🚪 Cerrar Sesión"
+            android:textColor="#EF4444"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:background="?attr/selectableItemBackground" />
+    </LinearLayout>
+
+</androidx.drawerlayout.widget.DrawerLayout>
