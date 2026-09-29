@@ -1,205 +1,338 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:background="#071728"
-    android:padding="20dp">
+    android:fillViewport="true"
+    android:background="#071728">
 
-    <!-- Tarjeta Principal Blanca -->
-    <com.google.android.material.card.MaterialCardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="28dp"
-        app:cardElevation="10dp"
-        app:cardBackgroundColor="#FFFFFF">
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="20dp">
 
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="24dp"
-            android:gravity="center_horizontal">
+            app:cardCornerRadius="32dp"
+            app:cardElevation="12dp"
+            app:cardBackgroundColor="#FFFFFF">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="FACILITO POS"
-                android:textColor="#111827"
-                android:textSize="22sp"
-                android:fontFamily="sans-serif-black" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sistema Integral de Facturación"
-                android:textColor="#6B7280"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="16dp" />
-
-            <!-- Selector de Rol (Dueño / Cajero) -->
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:orientation="horizontal"
-                android:background="#F3F4F6"
-                android:padding="4dp"
-                android:layout_marginBottom="16dp">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnTabDueno"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="🛡️ Acceso Dueño"
-                    android:textSize="11sp"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    app:backgroundTint="#0F1D38"
-                    app:cornerRadius="10dp"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnTabCajero"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="👤 Turno Cajeros"
-                    android:textSize="11sp"
-                    android:textStyle="bold"
-                    android:textColor="#4B5563"
-                    app:backgroundTint="#F3F4F6"
-                    app:cornerRadius="10dp"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp" />
-            </LinearLayout>
-
-            <!-- Mensaje de Error (Oculto por defecto) -->
-            <TextView
-                android:id="@+id/tvError"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FEE2E2"
-                android:textColor="#DC2626"
-                android:padding="10dp"
-                android:textSize="12sp"
-                android:textAlignment="center"
-                android:visibility="gone"
-                android:layout_marginBottom="12dp" />
-
-            <!-- Formulario Dueño -->
-            <LinearLayout
-                android:id="@+id/layoutDueno"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Correo Electrónico"
-                    android:textColor="#4B5563"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="4dp" />
-
-                <EditText
-                    android:id="@+id/etEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:background="#F9FAFB"
-                    android:text="angelpantoja241@gmail.com"
-                    android:textColor="#1F2937"
-                    android:textSize="14sp"
-                    android:gravity="center"
-                    android:inputType="textEmailAddress"
-                    android:layout_marginBottom="12dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Contraseña de Administrador"
-                    android:textColor="#4B5563"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="4dp" />
-
-                <EditText
-                    android:id="@+id/etPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:background="#F9FAFB"
-                    android:textColor="#1F2937"
-                    android:textSize="14sp"
-                    android:gravity="center"
-                    android:inputType="textPassword"
-                    android:hint="••••••••"
-                    android:layout_marginBottom="16dp" />
-            </LinearLayout>
-
-            <!-- Formulario Cajero (PIN) -->
-            <LinearLayout
-                android:id="@+id/layoutCajero"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:padding="26dp"
+                android:gravity="center_horizontal">
+
+                <!-- Logo Circular -->
+                <ImageView
+                    android:id="@+id/imgLogo"
+                    android:layout_width="68dp"
+                    android:layout_height="68dp"
+                    android:src="@drawable/app_logo"
+                    android:layout_marginBottom="8dp"
+                    android:contentDescription="Facilito Logo" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="PIN de Cajero (6 Dígitos)"
-                    android:textColor="#4B5563"
+                    android:text="FACILITO POS"
+                    android:textColor="#00A859"
+                    android:textSize="22sp"
+                    android:fontFamily="sans-serif-black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sistema Integral de Facturación"
+                    android:textColor="#64748B"
+                    android:textSize="12sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:layout_marginBottom="18dp" />
+
+                <!-- Pestañas Acceso Dueño vs Turno Cajeros -->
+                <LinearLayout
+                    android:id="@+id/layoutTabsContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:background="@drawable/bg_tabs"
+                    android:padding="4dp"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:id="@+id/tabDueno"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="🛡️ Acceso Dueño"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:background="@drawable/bg_tab_active" />
+
+                    <TextView
+                        android:id="@+id/tabCajero"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="👤 Turno Cajeros"
+                        android:textColor="#64748B"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Mensaje de Error Alerta -->
+                <TextView
+                    android:id="@+id/tvError"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FEE2E2"
+                    android:textColor="#DC2626"
+                    android:padding="10dp"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:layout_marginBottom="14dp" />
+
+                <!-- FORMULARIO LOGIN DUEÑO -->
+                <LinearLayout
+                    android:id="@+id/formLoginDueno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Correo Electrónico"
+                        android:textColor="#475569"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="6dp" />
+
+                    <EditText
+                        android:id="@+id/etEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/bg_input"
+                        android:text="angelpantoja241@gmail.com"
+                        android:textColor="#0F172A"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:inputType="textEmailAddress"
+                        android:layout_marginBottom="14dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Contraseña de Administrador"
+                        android:textColor="#475569"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="6dp" />
+
+                    <EditText
+                        android:id="@+id/etPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/bg_input"
+                        android:textColor="#0F172A"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:inputType="textPassword"
+                        android:hint="••••••••"
+                        android:layout_marginBottom="18dp" />
+                </LinearLayout>
+
+                <!-- FORMULARIO TURNO CAJEROS -->
+                <LinearLayout
+                    android:id="@+id/formLoginCajero"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="PIN de Cajero (6 Dígitos)"
+                        android:textColor="#475569"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="6dp" />
+
+                    <EditText
+                        android:id="@+id/etPin"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/bg_input"
+                        android:textColor="#0F172A"
+                        android:textSize="18sp"
+                        android:letterSpacing="0.2"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:inputType="numberPassword"
+                        android:maxLength="6"
+                        android:hint="••••••"
+                        android:layout_marginBottom="18dp" />
+                </LinearLayout>
+
+                <!-- FORMULARIO REGISTRO NUEVO NEGOCIO -->
+                <LinearLayout
+                    android:id="@+id/formRegistro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tu Nombre Completo"
+                        android:textColor="#475569"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="4dp" />
+
+                    <EditText
+                        android:id="@+id/etRegNombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:background="@drawable/bg_input"
+                        android:textColor="#0F172A"
+                        android:textSize="13sp"
+                        android:gravity="center"
+                        android:hint="Ej. Angel Pantoja"
+                        android:layout_marginBottom="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nombre de tu Comercio"
+                        android:textColor="#475569"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="4dp" />
+
+                    <EditText
+                        android:id="@+id/etRegComercio"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:background="@drawable/bg_input"
+                        android:textColor="#0F172A"
+                        android:textSize="13sp"
+                        android:gravity="center"
+                        android:hint="Ej. Inversiones La Paz"
+                        android:layout_marginBottom="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Correo Electrónico"
+                        android:textColor="#475569"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="4dp" />
+
+                    <EditText
+                        android:id="@+id/etRegEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:background="@drawable/bg_input"
+                        android:textColor="#0F172A"
+                        android:textSize="13sp"
+                        android:gravity="center"
+                        android:inputType="textEmailAddress"
+                        android:hint="correo@ejemplo.com"
+                        android:layout_marginBottom="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Contraseña de Administrador"
+                        android:textColor="#475569"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="4dp" />
+
+                    <EditText
+                        android:id="@+id/etRegPass"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:background="@drawable/bg_input"
+                        android:textColor="#0F172A"
+                        android:textSize="13sp"
+                        android:gravity="center"
+                        android:inputType="textPassword"
+                        android:hint="••••••••"
+                        android:layout_marginBottom="14dp" />
+                </LinearLayout>
+
+                <!-- Botón Principal Verde -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAccion"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="→ Ingresar al Panel"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    app:backgroundTint="#00A859"
+                    app:cornerRadius="14dp" />
+
+                <!-- Enlace Registro / Login Alternar -->
+                <TextView
+                    android:id="@+id/tvToggleRegistro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¿Nuevo negocio? Regístrate aquí"
+                    android:textColor="#1E293B"
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="4dp" />
+                    android:layout_marginTop="16dp" />
 
-                <EditText
-                    android:id="@+id/etPin"
+                <!-- Separador punteado -->
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:background="#F9FAFB"
-                    android:textColor="#1F2937"
-                    android:textSize="18sp"
+                    android:layout_height="1dp"
+                    android:background="#F1F5F9"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Estado de Caja y Vincular Dispositivo -->
+                <TextView
+                    android:id="@+id/tvCajaAsignada"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📱 Caja asignada: Caja 01"
+                    android:textColor="#64748B"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/btnVincularCaja"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🔑 Vincular este dispositivo a una Caja"
+                    android:textColor="#2563EB"
+                    android:textSize="11sp"
                     android:textStyle="bold"
-                    android:gravity="center"
-                    android:letterSpacing="0.2"
-                    android:inputType="numberPassword"
-                    android:maxLength="6"
-                    android:hint="••••••"
-                    android:layout_marginBottom="16dp" />
+                    android:layout_marginTop="4dp" />
+
             </LinearLayout>
-
-            <!-- Botón Principal Verde -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnLogin"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:text="→ Ingresar al Panel"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                app:backgroundTint="#00A859"
-                app:cornerRadius="14dp" />
-
-            <TextView
-                android:id="@+id/tvCajaAsignada"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="📱 Caja asignada: Caja 01"
-                android:textColor="#6B7280"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:layout_marginTop="16dp" />
-
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-</LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+</ScrollView>
