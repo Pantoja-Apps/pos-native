@@ -3,6 +3,7 @@ package com.pantoja.facilitopos
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -34,7 +35,7 @@ class PosActivity : AppCompatActivity() {
         val btnCobrar = findViewById<MaterialButton>(R.id.btnCobrar)
         val containerProductos = findViewById<LinearLayout>(R.id.containerProductos)
 
-        tvTasaBcv.text = "BCV: " + String.format("%.2f", tasaBcv) + " Bs | $cajaNombre"
+        tvTasaBcv.text = "BCV: " + String.format("%.2f", tasaBcv) + " Bs | " + cajaNombre
 
         btnCobrar.setOnClickListener {
             if (totalUsd > 0) {
@@ -47,10 +48,9 @@ class PosActivity : AppCompatActivity() {
             }
         }
 
-        // Cargar catálogo de Supabase en segundo plano seguro
+        // Cargar productos en hilo secundario
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                // Obtener tasa BCV del negocio
                 val resNegocio = SupabaseClient.get("negocios?id=eq.neg_mujkrui8&select=tasa_bcv_actual")
                 if (resNegocio != null) {
                     val arrNeg = JsonParser.parseString(resNegocio).asJsonArray
@@ -59,7 +59,6 @@ class PosActivity : AppCompatActivity() {
                     }
                 }
 
-                // Obtener productos
                 val res = SupabaseClient.get("productos?select=*&limit=30")
                 withContext(Dispatchers.Main) {
                     tvTasaBcv.text = "BCV: " + String.format("%.2f", tasaBcv) + " Bs"
@@ -72,7 +71,6 @@ class PosActivity : AppCompatActivity() {
                             val obj = item.asJsonObject
                             val nombre = if (obj.has("nombre") && !obj.get("nombre").isJsonNull) obj.get("nombre").asString else "Producto"
                             val precio = if (obj.has("precio_usd") && !obj.get("precio_usd").isJsonNull) obj.get("precio_usd").asDouble else 0.0
-                            val codigo = if (obj.has("codigo_barras") && !obj.get("codigo_barras").isJsonNull) obj.get("codigo_barras").asString else ""
 
                             val card = MaterialCardView(this@PosActivity).apply {
                                 radius = 20f
@@ -113,12 +111,11 @@ class PosActivity : AppCompatActivity() {
                             infoLayout.addView(tvNom)
                             infoLayout.addView(tvPre)
 
-                            val btnAdd = MaterialButton(this@PosActivity).apply {
+                            val btnAdd = Button(this@PosActivity).apply {
                                 text = "+ Agregar"
                                 textSize = 11f
                                 setTextColor(Color.WHITE)
                                 setBackgroundColor(Color.parseColor("#0F1D38"))
-                                cornerRadius = 12
                                 setOnClickListener {
                                     totalUsd += precio
                                     tvTotalUsd.text = "Total: $" + String.format("%.2f", totalUsd)
@@ -135,7 +132,7 @@ class PosActivity : AppCompatActivity() {
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@PosActivity, "Modo sin conexión activo", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@PosActivity, "Catálogo offline", Toast.LENGTH_SHORT).show()
                 }
             }
         }

@@ -54,10 +54,10 @@ class MainActivity : AppCompatActivity() {
 
         tvCajaAsignada.text = "📱 Caja asignada: $cajaActual"
 
-        // Cambiar a Dueño
+        // Pestaña Dueño
         tabDueno.setOnClickListener {
             modoDueno = true
-            tabDueno.setBackgroundResource(R.drawable/bg_tab_active)
+            tabDueno.setBackgroundResource(R.drawable.bg_tab_active)
             tabDueno.setTextColor(Color.WHITE)
             tabCajero.setBackgroundResource(0)
             tabCajero.setTextColor(Color.parseColor("#64748B"))
@@ -66,10 +66,10 @@ class MainActivity : AppCompatActivity() {
             tvError.visibility = View.GONE
         }
 
-        // Cambiar a Cajero
+        // Pestaña Cajero
         tabCajero.setOnClickListener {
             modoDueno = false
-            tabCajero.setBackgroundResource(R.drawable/bg_tab_active)
+            tabCajero.setBackgroundResource(R.drawable.bg_tab_active)
             tabCajero.setTextColor(Color.WHITE)
             tabDueno.setBackgroundResource(0)
             tabDueno.setTextColor(Color.parseColor("#64748B"))
@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity() {
                 .show()
         }
 
-        // Procesar Entrada
+        // Validar e Ingresar
         btnAccion.setOnClickListener {
             tvError.visibility = View.GONE
             btnAccion.isEnabled = false
@@ -139,19 +139,14 @@ class MainActivity : AppCompatActivity() {
                         if (nom.isNotEmpty() && com.isNotEmpty() && mail.isNotEmpty() && pwd.isNotEmpty()) {
                             val newNeg = "neg_" + System.currentTimeMillis()
                             val newUsr = "usr_" + System.currentTimeMillis()
-                            
-                            val jsonNeg = "{\"id\":\"$newNeg\",\"nombre\":\"$com\",\"tasa_bcv_actual\":36.0}"
-                            SupabaseClient.post("negocios", jsonNeg)
-
-                            val jsonUsr = "{\"id\":\"$newUsr\",\"negocio_id\":\"$newNeg\",\"nombre\":\"$nom\",\"correo\":\"$mail\",\"password\":\"$pwd\",\"rol\":\"dueno\"}"
-                            SupabaseClient.post("usuarios", jsonUsr)
-
+                            SupabaseClient.post("negocios", "{\"id\":\"$newNeg\",\"nombre\":\"$com\",\"tasa_bcv_actual\":36.0}")
+                            SupabaseClient.post("usuarios", "{\"id\":\"$newUsr\",\"negocio_id\":\"$newNeg\",\"nombre\":\"$nom\",\"correo\":\"$mail\",\"password\":\"$pwd\",\"rol\":\"dueno\"}")
                             nombreUser = nom
                             rolUser = "dueno"
                             negocioId = newNeg
                             loginOk = true
                         } else {
-                            errorMsg = "Por favor complete todos los datos"
+                            errorMsg = "Complete todos los campos requeridos"
                         }
                     } else if (modoDueno) {
                         val email = etEmail.text.toString().trim()
@@ -202,7 +197,7 @@ class MainActivity : AppCompatActivity() {
                     if (modoDueno && etEmail.text.toString().contains("angelpantoja")) {
                         loginOk = true
                     } else {
-                        errorMsg = "Error: ${e.localizedMessage}"
+                        errorMsg = "Error de red: ${e.localizedMessage}"
                     }
                 }
 
