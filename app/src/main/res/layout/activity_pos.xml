@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- CONTENIDO PRINCIPAL DEL POS -->
+    <!-- CONTENIDO POS PRINCIPAL -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#F8FAFC">
 
-        <!-- CABECERA PRINCIPAL CON BOTON HAMBURGUESA -->
+        <!-- CABECERA -->
         <LinearLayout
             android:id="@+id/headerBar"
             android:layout_width="match_parent"
@@ -21,7 +21,6 @@
             android:gravity="center_vertical"
             android:paddingHorizontal="14dp">
 
-            <!-- Boton Menu Hamburguesa -->
             <TextView
                 android:id="@+id/btnAbrirMenu"
                 android:layout_width="40dp"
@@ -33,8 +32,8 @@
                 android:background="?attr/selectableItemBackgroundBorderless" />
 
             <ImageView
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:src="@drawable/app_logo"
                 android:layout_marginHorizontal="8dp" />
 
@@ -62,7 +61,7 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- Tasa BCV -->
+            <!-- Badge Tasa Oficial BCV -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -83,7 +82,7 @@
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
 
-        <!-- BARRA DE BÚSQUEDA Y LECTOR DE CÓDIGOS -->
+        <!-- BUSCADOR -->
         <LinearLayout
             android:id="@+id/searchSection"
             android:layout_width="match_parent"
@@ -101,7 +100,7 @@
                 android:layout_height="44dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_input"
-                android:hint="🔍 Buscar producto o código..."
+                android:hint="🔍 Buscar producto o código de barras..."
                 android:textSize="13sp"
                 android:textColor="#0F172A"
                 android:paddingHorizontal="14dp"
@@ -121,7 +120,7 @@
                 android:padding="0dp" />
         </LinearLayout>
 
-        <!-- SELECTOR DE CATEGORÍAS -->
+        <!-- SELECTOR DE DEPARTAMENTOS -->
         <HorizontalScrollView
             android:id="@+id/categoryScroll"
             android:layout_width="match_parent"
@@ -194,7 +193,7 @@
                     android:id="@+id/catHigiene"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Higiene"
+                    android:text="Higiene Personal"
                     android:textSize="11sp"
                     android:textStyle="bold"
                     android:textColor="#475569"
@@ -219,7 +218,7 @@
                 android:orientation="vertical" />
         </ScrollView>
 
-        <!-- BARRA INFERIOR DEL CARRITO Y COBRO -->
+        <!-- BARRA INFERIOR DEL CARRITO -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cartBottomBar"
             android:layout_width="match_parent"
@@ -240,17 +239,19 @@
                 android:gravity="center_vertical">
 
                 <LinearLayout
+                    android:id="@+id/layoutVerCarrito"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:background="?attr/selectableItemBackground">
 
                     <TextView
                         android:id="@+id/tvItemsCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0 productos en orden"
-                        android:textColor="#64748B"
+                        android:text="🛒 0 items (Ver Detalle)"
+                        android:textColor="#2563EB"
                         android:textSize="11sp"
                         android:textStyle="bold" />
 
@@ -288,7 +289,7 @@
         </com.google.android.material.card.MaterialCardView>
     </RelativeLayout>
 
-    <!-- MENÚ LATERAL DESPLEGABLE (DRAWER NATIVO) -->
+    <!-- MENÚ LATERAL DESPLEGABLE -->
     <LinearLayout
         android:id="@+id/navigationMenu"
         android:layout_width="280dp"

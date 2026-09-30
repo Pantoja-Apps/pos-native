@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Gravity
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -82,12 +83,17 @@ class PosActivity : AppCompatActivity() {
         val btnCobrar = findViewById<MaterialButton>(R.id.btnCobrar)
         val btnAbrirMenu = findViewById<TextView>(R.id.btnAbrirMenu)
         val tvMenuUser = findViewById<TextView>(R.id.tvMenuUser)
+        val layoutVerCarrito = findViewById<LinearLayout>(R.id.layoutVerCarrito)
 
         tvTerminalInfo.text = "$terminalNombre • $cajeroNombre"
         tvMenuUser.text = "$cajeroNombre • Dueño"
 
         btnAbrirMenu.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
+        }
+
+        layoutVerCarrito.setOnClickListener {
+            mostrarDetalleCarrito()
         }
 
         configurarMenuLateral()
@@ -116,7 +122,7 @@ class PosActivity : AppCompatActivity() {
     private fun configurarMenuLateral() {
         findViewById<TextView>(R.id.navInventario).setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.START)
-            mostrarFormularioProducto(null)
+            mostrarGestionInventarioCompleto()
         }
 
         findViewById<TextView>(R.id.navHistorial).setOnClickListener {
@@ -156,7 +162,170 @@ class PosActivity : AppCompatActivity() {
         }
     }
 
-    // MODAL DE CREACIÓN / EDICIÓN COMPLETA DE PRODUCTOS
+    // MODAL DE DETALLE DEL CARRITO (ELIMINAR / AJUSTAR)
+    private fun mostrarDetalleCarrito() {
+        if (carrito.isEmpty()) {
+            Toast.makeText(this, "El carrito está vacío", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val scroll = ScrollView(this)
+        val layout = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(24, 20, 24, 20)
+        }
+
+        for ((_, item) in carrito) {
+            val row = LinearLayout(this).apply {
+                orientation = LinearLayout.HORIZONTAL
+                gravity = Gravity.CENTER_VERTICAL
+                setPadding(0, 10, 0, 10)
+            }
+
+            val tvNom = TextView(this).apply {
+                text = "${item.producto.nombre}\nCant: ${item.cantidad} | Sub: $${String.format("%.2f", item.producto.precioUsd * item.cantidad)}"
+                textSize = 12f
+                setTextColor(Color.parseColor("#0F172A"))
+                layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+            }
+
+            val btnMenos = Button(this).apply {
+                text = "-"
+                setOnClickListener {
+                    if (item.cantidad > 1) {
+                        item.cantidad -= 1.0
+                    } else {
+                        carrito.remove(item.producto.id)
+                    }
+                    actualizarTotalesUI()
+                    mostrarDetalleCarrito()
+                }
+            }
+
+            val btnMas = Button(this).apply {
+                text = "+"
+                setOnClickListener {
+                    item.cantidad += 1.0
+                    actualizarTotalesUI()
+                    mostrarDetalleCarrito()
+                }
+            }
+
+            row.addView(tvNom)
+            row.addView(btnMenos)
+            row.addView(btnMas)
+            layout.addView(row)
+        }
+
+        scroll.addView(layout)
+
+        AlertDialog.Builder(this)
+            .setTitle("🛒 Detalle del Carrito")
+            .setView(scroll)
+            .setPositiveButton("Aceptar", null)
+            .setNegativeButton("Vaciar Orden") { _, _ ->
+                carrito.clear()
+                actualizarTotalesUI()
+            }
+            .show()
+    }
+
+    // GESTIÓN COMPLETA DE INVENTARIO EN MODAL
+    private fun mostrarGestionInventarioCompleto() {
+        val view = layoutInflater.inflate(R.layout.dialog_inventario_completo, null)
+        val tvTotal = view.findViewById<TextView>(R.id.tvTotalProdMetric)
+        val tvValor = view.findViewById<TextView>(R.id.tvValorInvMetric)
+        val etBuscarInv = view.findViewById<EditText>(R.id.etBuscarInv)
+        val container = view.findViewById<LinearLayout>(R.id.containerListaInv)
+        val btnNuevo = view.findViewById<MaterialButton>(R.id.btnNuevoProdModal)
+
+        tvTotal.text = "${todosLosProductos.size}"
+        val vTot = todosLosProductos.sumOf { it.stock * it.precioUsd }
+        tvValor.text = "$ " + String.format("%.2f", vTot)
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(view)
+            .create()
+
+        btnNuevo.setOnClickListener {
+            dialog.dismiss()
+            mostrarFormularioProducto(null)
+        }
+
+        fun llenarLista(filtro: String) {
+            container.removeAllViews()
+            val filtrados = todosLosProductos.filter {
+                filtro.isEmpty() || it.nombre.lowercase().contains(filtro) || it.codigo.lowercase().contains(filtro)
+            }
+
+            for (p in filtrados) {
+                val card = MaterialCardView(this).apply {
+                    radius = 12f
+                    setCardBackgroundColor(Color.WHITE)
+                    strokeWidth = 1
+                    strokeColor = Color.parseColor("#E2E8F0")
+                    val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                    lp.setMargins(0, 0, 0, 10)
+                    layoutParams = lp
+                }
+
+                val row = LinearLayout(this).apply {
+                    orientation = LinearLayout.HORIZONTAL
+                    setPadding(16, 14, 16, 14)
+                    gravity = Gravity.CENTER_VERTICAL
+                }
+
+                val info = LinearLayout(this).apply {
+                    orientation = LinearLayout.VERTICAL
+                    layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+                }
+
+                val tvNom = TextView(this).apply {
+                    text = p.nombre
+                    textSize = 13f
+                    setTypeface(null, android.graphics.Typeface.BOLD)
+                    setTextColor(Color.parseColor("#0F172A"))
+                }
+
+                val tvDet = TextView(this).apply {
+                    text = "${p.departamento} • Stock: ${p.stock} • Detal: $${p.precioUsd}"
+                    textSize = 11f
+                    setTextColor(Color.parseColor("#64748B"))
+                }
+
+                info.addView(tvNom)
+                info.addView(tvDet)
+
+                val btnEditar = Button(this).apply {
+                    text = "Editar"
+                    textSize = 10f
+                    setOnClickListener {
+                        dialog.dismiss()
+                        mostrarFormularioProducto(p)
+                    }
+                }
+
+                row.addView(info)
+                row.addView(btnEditar)
+                card.addView(row)
+                container.addView(card)
+            }
+        }
+
+        llenarLista("")
+
+        etBuscarInv.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                llenarLista(s.toString().trim().lowercase())
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+        dialog.show()
+    }
+
+    // FORMULARIO MODAL DE PRODUCTO (CREAR / EDITAR)
     private fun mostrarFormularioProducto(productoExistente: ProductoPos?) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_inventario, null)
         val tvTitulo = dialogView.findViewById<TextView>(R.id.tvTituloInv)
@@ -241,14 +410,14 @@ class PosActivity : AppCompatActivity() {
                 Toast.makeText(this, "Producto guardado con éxito", Toast.LENGTH_SHORT).show()
                 dialog.dismiss()
             } else {
-                Toast.makeText(this, "Por favor complete nombre y precio", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Complete nombre y precio", Toast.LENGTH_SHORT).show()
             }
         }
 
         dialog.show()
     }
 
-    // MODAL DE HISTORIAL COMPLETO
+    // MODAL HISTORIAL DE FACTURAS
     private fun mostrarModalHistorial() {
         CoroutineScope(Dispatchers.IO).launch {
             val res = SupabaseClient.get("ventas?negocio_id=eq.$negocioId&select=*&order=fecha.desc&limit=15")
@@ -276,7 +445,7 @@ class PosActivity : AppCompatActivity() {
         }
     }
 
-    // CIERRE DE CAJA
+    // MODAL DE CIERRE DE CAJA OFICIAL
     private fun mostrarModalCierreCaja() {
         CoroutineScope(Dispatchers.IO).launch {
             val res = SupabaseClient.get("ventas?negocio_id=eq.$negocioId&select=*")
@@ -304,7 +473,7 @@ class PosActivity : AppCompatActivity() {
                     • Total Recaudado USD: $ ${String.format("%.2f", totalGeneralUsd)}
                     • Total Recaudado BS: ${String.format("%.2f", totalGeneralBs)} Bs
                     
-                    ¿Desea asentar el cierre en la base de datos fiscal?
+                    ¿Desea asentar el cierre definitivo en la base de datos fiscal?
                 """.trimIndent()
 
                 AlertDialog.Builder(this@PosActivity)
@@ -655,7 +824,7 @@ class PosActivity : AppCompatActivity() {
             val row = LinearLayout(this).apply {
                 orientation = LinearLayout.HORIZONTAL
                 setPadding(20, 18, 20, 18)
-                gravity = android.view.Gravity.CENTER_VERTICAL
+                gravity = Gravity.CENTER_VERTICAL
             }
 
             val infoLayout = LinearLayout(this).apply {
@@ -688,7 +857,7 @@ class PosActivity : AppCompatActivity() {
             infoLayout.addView(tvSub)
             infoLayout.addView(tvPre)
 
-            // Pulsar prolongado sobre el producto para editarlo
+            // Si se deja presionado el producto, se abre su edición
             card.setOnLongClickListener {
                 mostrarFormularioProducto(prod)
                 true
@@ -761,6 +930,6 @@ class PosActivity : AppCompatActivity() {
 
         tvTotalUsd.text = "Total: $" + String.format("%.2f", totalUsd)
         tvTotalBs.text = "Ref: " + String.format("%.2f", totalBs) + " Bs"
-        tvItemsCount.text = String.format("%.0f", totalItems) + " productos en orden"
+        tvItemsCount.text = "🛒 " + String.format("%.0f", totalItems) + " items (Ver Detalle)"
     }
 }
